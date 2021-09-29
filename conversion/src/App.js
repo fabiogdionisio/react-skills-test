@@ -7,6 +7,7 @@ function App() {
   // There was a memory leak in using state for the timer. The unmount function on the
   // useEffect hook was not able to find the reference for the timer (because of rerenders), 
   // so it was not actually clearing it. Using react's ref feature worked like a charm.
+  // It could also be done using a variable inside the useEffect 
   const [counter, setCounter] = useState(0);
 
   const timerTrigger = () => {
@@ -17,13 +18,13 @@ function App() {
     console.log('CDM');
 
     setText((new Date()).getMilliseconds().toString());
-    timer.current = window.setInterval(() => {
+    const foo = window.setInterval(() => {
       timerTrigger();
     }, 1000);
 
     return () => {
       console.log('CWU'); 
-      window.clearInterval(timer.current);
+      window.clearInterval(foo);
     }
   }, [])
 
