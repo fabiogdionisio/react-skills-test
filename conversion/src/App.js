@@ -1,35 +1,34 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-class App extends Component {
-  state = {
-    text: "Default text",
-    timer: null,
-    counter: 0
+function App() {
+  const [text, setText] = useState("Default text");
+  const timer = useRef(null);
+  // There was a memory leak in using state for the timer. The unmount function on the
+  // useEffect hook was not able to find the reference for the timer (because of rerenders), 
+  // so it was not actually clearing it. Using react's ref feature worked like a charm.
+  const [counter, setCounter] = useState(0);
+
+  const timerTrigger = () => {
+    setCounter(prevCounter => prevCounter + 1);
   }
 
-  componentDidMount() {
+  useEffect(() => {
     console.log('CDM');
-    this.setState({ 
-      text: (new Date()).getMilliseconds().toString(),
-      timer: window.setInterval(() => {
-        this.timerTrigger();
-      }, 1000)
-    });
-  }
 
-  componentWillUnmount() {
-    console.log('CWU');
-    window.clearInterval(this.state.timer);
-  }
+    setText((new Date()).getMilliseconds().toString());
+    timer.current = window.setInterval(() => {
+      timerTrigger();
+    }, 1000);
 
-  timerTrigger = () => {
-    this.setState({ counter: this.state.counter + 1 });
-  }
+    return () => {
+      console.log('CWU'); 
+      window.clearInterval(timer.current);
+    }
+  }, [])
 
-  render() {
-    const { text, counter } = this.state;
-    return <div>
+  return (
+    <div>
       <div>
         {text}
       </div>
@@ -39,8 +38,8 @@ class App extends Component {
       <div>
         <Link to="/page2">Go to Page2</Link>
       </div>
-    </div>;
-  }
+    </div>
+  )
 }
 
 export default App;
