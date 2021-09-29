@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 class PageHandler extends Component {
   render() {
+    const { match: { params } } = this.props;
     return <div>
-      Page #<br /><br />
+      Page {params.id}<br /><br />
       <Link to="/">Go home</Link>
     </div>;
   }

@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { Route, BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import PageHandler from './PageHandler';
 
 ReactDOM.render(
   <BrowserRouter>
     <Route exact path="/" component={App} />
+    <Route exact path="/page/:id" component={PageHandler} />
   </BrowserRouter>,
   document.getElementById('root')
 );
