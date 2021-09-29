@@ -5,8 +5,15 @@ class App extends Component {
     text: 'Landing Page 1'
   }
 
-  componentDidUpdate() {
-    console.log(this.state.text);
+  componentDidUpdate(prevState) {
+    const { text } = this.state;
+    console.log(text);
+
+    // Moved the update condition to this lifecycle method. Instead of having a conditional checking for the text value,
+    // it could also be done using a counter in state for extended funcionality.
+
+    if (text === 'Landing Page 2')
+      this.setState({ text: 'Landing Page 3' });
   }
 
   componentDidMount() {
@@ -15,11 +22,6 @@ class App extends Component {
   }
 
   render() {
-    const { text } = this.state;
-    
-    if (text === 'Landing Page 2')
-      this.setState({ text: 'Landing Page 3' });
-
     return <div>
       {this.state.text}
     </div>;
