@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './App';
 import { Route, BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer)
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Route exact path="/" component={App} />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Route exact path="/" component={App} />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 

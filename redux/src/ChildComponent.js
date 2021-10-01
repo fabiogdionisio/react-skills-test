@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-class ChildComponent extends Component {
-  render() {
-    return <div>
-      {this.props.text}
-    </div>;
-  }
+function ChildComponent() {
+  const text = useSelector((state) => state.text);
+
+  return <div>
+    {text}
+  </div>
 }
 
 export default ChildComponent;

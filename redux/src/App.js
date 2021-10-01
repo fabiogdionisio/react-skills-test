@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import ChildComponent from './ChildComponent';
 
-class App extends Component {
-  state = {
-    text: "Important Text"
-  }
-
-  render() {
-    return <div>
-        <ChildComponent text={this.state.text} />
-        <ChildComponent text={this.state.text} />
-      </div>;
-  }
+function App() {
+  // When I need to use redux in a real world app, I tend to use Redux Toolkil for
+  // more standard way of writing redux. In this exemple I chose to implement just the core redux concepts  
+  const dispatch = useDispatch()
+  
+  return (
+    <div>
+      <ChildComponent />
+      <ChildComponent />
+      <button onClick={() => dispatch({ type: 'CHANGE_TEXT', payload: 'App changed it'})}>Change text</button>
+    </div>
+  )
 }
 
 export default App;
